@@ -2,27 +2,24 @@
 import pandas as pd
 import email_service
 
-arq = pd.ExcelFile(r"C:/Temp/Python/UmEspaco/Controle.xlsx")
+#arq = pd.ExcelFile(r"C:/Temp/Python/UmEspaco/Controle.xlsx")
+arq = pd.ExcelFile(r"Controle.xlsx")
 #sheet start Start from 0
 Sheet_cadastro = arq.parse(1)
+lista_Responsaveis = Sheet_cadastro['Responsável']
 
-#varre cada linha da coluna selecioanda e retorna o valor sem header e sem indice
+#Para cada Responsável, pega nome e contato
 var = 0
-
-for linha in Sheet_cadastro:
-   print(linha)
-
-   Responsavel = Sheet_cadastro.loc[[var], ['Responsável']]
-   nome = Responsavel.to_string(header=None, index=False)
+for contatos in lista_Responsaveis:
+   nomeResp = Sheet_cadastro.loc[[var], ['Responsável']]
+   Nome_Dest = nomeResp.to_string(header=None, index=False).replace(' ', '')
    
-   # Contato = Sheet_cadastro.loc[[var], ['Contato']]
-   # destino = Contato.to_string(header=None, index=False)
-   
-   print(nome)
-   # print(destino)
+   contatoResp = Sheet_cadastro.loc[[var], ['Contato']]
+   email_Dest = contatoResp.to_string(header=None, index=False).replace(' ', '')
+
+   print("Enviar para: ")
+   print("Nome: ", Nome_Dest, " / Contato: ", email_Dest)
+
+   #Call the sendEmail service (If the name is not fill the attachment is not sent)
+   email_service.SendEmail(email_Dest, Nome_Dest)
    var = var + 1
-
-#Call the sendEmail service
-#If the name is not fill the attachment is not sent
-#email_service.SendEmail('prof.erikaathie.umespaco@gmail.com', 'Rodrigo Mourao Lino Silva')
-

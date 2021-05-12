@@ -16,7 +16,7 @@
 # on: https://pages.github.com/
 
 import json
-import smtplib, ssl
+import smtplib, ssl, os
 from email.message import EmailMessage
 SENDER = ''
 PASSWORD = ''
@@ -33,8 +33,10 @@ class DataFile:
 
 Anexo = DataFile()
 
+MeuLocal = os.path.dirname(os.path.realpath(__file__))
+
 #Get e-mail access information (após escopo do 'with' a arquivo será fechado)
-with open("access.json", 'r') as read_file:
+with open(MeuLocal + "//bkp_DoNOT_UploadToGitHubb//access.json", 'r', encoding='utf8') as read_file:
    DadosDeAcesso = json.load(read_file)
    SENDER = DadosDeAcesso["SENDER"]
    PASSWORD = DadosDeAcesso["PSWRD"]
@@ -52,7 +54,7 @@ def SendEmail( Dest='', Name = ''):
 
       #new EmailMessage type.
       msg = EmailMessage()
-      msg["Subject"] = SUBJECT
+      msg["Subject"] = SUBJECT + ' ' + Name
       msg["From"] = SENDER
       msg["To"] = DESTINATION
       msg.set_content(EMAIL_TEXT)
@@ -60,29 +62,45 @@ def SendEmail( Dest='', Name = ''):
       if Name != '':
          print("Get the file by name", Name)
          file_name = Attach(Name)
-         #msg.add_attachment(file_data, maintype='application', subtype='octet-stream', filename=file_name)
-         msg.add_attachment(Anexo.FileData, maintype='application', subtype='octet-stream', filename=Anexo.FileName)
+
+         #Somente envia se encontrar arquivo do boleto
+         if file_name != 0:
+            #msg.add_attachment(file_data, maintype='application', subtype='octet-stream', filename=file_name)
+            msg.add_attachment(Anexo.FileData, maintype='application', subtype='octet-stream', filename=Anexo.FileName)
+
+            print("Sendding...")
+            #Envia a mensagem
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+               smtp.login(SENDER, PASSWORD)
+               smtp.send_message(msg)
+
+            print("Sent!")
+
       else:
-         print("No file to attach")
+         #caso queira enviar sem anexo
 
-      print("Sendding...")
-      #Envia a mensagem
-      with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-         smtp.login(SENDER, PASSWORD)
-         smtp.send_message(msg)
+         print("Sem anexo - Envio abortado")
 
-      print("Sent!")
+         # print("Sendding...")
+         # #Envia a mensagem
+         # with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+         #    smtp.login(SENDER, PASSWORD)
+         #    smtp.send_message(msg)
+
+         # print("Sent!")
 
 
 #Busca arquivo pelo nome informado para busca
+#Caso o retorno de erro, então retorna 0
 def Attach(File=''):
-   if File == '':
-      print("No file informed")
-   else:
-      #Buscar e inserir 1 anexo no e-mail
+   
+   #Tenta buscar e inserir 1 anexo no e-mail    
+   try:
       arquivo = 'Boletos/'+File+'.pdf'
       with open(arquivo, 'rb') as f:
          Anexo.FileData = f.read() # file_data = f.read()
          Anexo.FileName = f.name # file_name = f.name
-
+   except IOError:
+      print("NÃO FOI ENCONTRADO BOLETO")
+      return 0
 
