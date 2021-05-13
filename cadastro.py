@@ -1,9 +1,11 @@
 
 import pandas as pd
-import email_service
+import email_service, os      
 
-#arq = pd.ExcelFile(r"C:/Temp/Python/UmEspaco/Controle.xlsx")
-arq = pd.ExcelFile(r"Controle.xlsx")
+MeuLocal = os.path.dirname(os.path.realpath(__file__))
+local = MeuLocal + 'bkp_DoNOT_UploadToGitHubb/Controle.xlsx'
+
+arq = pd.ExcelFile(r'bkp_DoNOT_UploadToGitHubb/Controle.xlsx')
 #sheet start Start from 0
 Sheet_cadastro = arq.parse(1)
 lista_Responsaveis = Sheet_cadastro['Responsável']
