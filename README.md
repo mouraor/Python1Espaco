@@ -10,6 +10,7 @@ UmEspaco services
 4) Abortar envio para este contato caso não encontre arquivo anexo - Status: OK
   
 4) Mover arquivo anexado para outro diretório - Status: 
+   Buscar cadastro em outro diretório via pandas.excelfile()
   
 5) Construir diferentes configurações JSON para cada tipo de envio - Status: 
 
