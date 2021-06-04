@@ -46,7 +46,7 @@ with open(MeuLocal + "//bkp_DoNOT_UploadToGitHubb//access.json", 'r', encoding='
 #This function called to send a email.
 #Dest -> Necessary to inform the e-mail destination
 #Name[optional] -> inform the name of the file to be attached (ONLY pdf files)
-def SendEmail( Dest='', Name = ''):
+def SendEmail( Dest='', Name = '', Ref = ''):
    if Dest == '':
       print("Not possible to send to empty destination")
    else:
@@ -54,7 +54,7 @@ def SendEmail( Dest='', Name = ''):
 
       #new EmailMessage type.
       msg = EmailMessage()
-      msg["Subject"] = SUBJECT + ' ' + Name
+      msg["Subject"] = SUBJECT + ' Ref.: ' + Ref
       msg["From"] = SENDER
       msg["To"] = DESTINATION
       msg.set_content(EMAIL_TEXT)

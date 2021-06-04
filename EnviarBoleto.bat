@@ -1,0 +1,3 @@
+python cadastro.py
+
+pause
