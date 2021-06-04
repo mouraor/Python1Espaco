@@ -60,7 +60,7 @@ def SendEmail( Dest='', Name = '', Ref = ''):
       msg.set_content(EMAIL_TEXT)
 
       if Name != '':
-         print("Get the file by name", Name)
+         print("Anexar Boleto com nome: ", Name)
          file_name = Attach(Name)
 
          #Somente envia se encontrar arquivo do boleto
@@ -74,7 +74,7 @@ def SendEmail( Dest='', Name = '', Ref = ''):
                smtp.login(SENDER, PASSWORD)
                smtp.send_message(msg)
 
-            print("Sent!")
+            print("Sent!\n")
 
       else:
          #caso queira enviar sem anexo
@@ -101,6 +101,8 @@ def Attach(File=''):
          Anexo.FileData = f.read() # file_data = f.read()
          Anexo.FileName = f.name # file_name = f.name
    except IOError:
-      print("NÃO FOI ENCONTRADO BOLETO")
+      print(" ************************************ \n")
+      print(" **** NÃO FOI ENCONTRADO BOLETO ***** \n")
+      print(" ************************************ \n")
       return 0
 
