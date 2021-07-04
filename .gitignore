@@ -1,0 +1,7 @@
+#Ignorar todos os arquivos na pasta abaixo
+__pycache__/
+Configuration/
+Boletos/
+
+#ignorar arquivos com a extensao
+*.xlsx

@@ -32,24 +32,24 @@ for contatos in lista_Responsaveis:
    nome_aluno = Aluno.to_string(header=None, index=False)#.replace(' ', '')
    nome_aluno = nome_aluno[1:]
 
-   print("Enviar para: ", nome_aluno)
+   print("Enviar para responsável de: ", nome_aluno)
 
    #Se tiver ';' tem 2 emails de contato
    if email_Dest.count(';') != 0:
-      print("duplo")
+      print("...")
       #Primeiro end email (até ;)
       email_1 = email_Dest[0:email_Dest.find(';')]
       #segunda end email (depois ; [soma 3 carry + return] até fim)
       email_2 = email_Dest[email_Dest.find(';')+3:]
 
-      print("Nome: ", Nome_Dest, " / Contato: ", email_1, " / Ref: ", nome_aluno)
+      print("Nome: ", Nome_Dest, " / Contato: ", email_1)
       email_service.SendEmail(email_1, Nome_Dest, nome_aluno)
       
-      print("Nome: ", Nome_Dest, " / Contato: ", email_2, " / Ref: ", nome_aluno)
+      print("Nome: ", Nome_Dest, " / Contato: ", email_2)
       email_service.SendEmail(email_2, Nome_Dest, nome_aluno)
    else:
       #Call the sendEmail service (If the name is not fill the attachment is not sent)
-      print("Nome: ", Nome_Dest, " / Contato: ", email_Dest, " / Ref: ", nome_aluno)
+      print("Nome: ", Nome_Dest, " / Contato: ", email_Dest)
       email_service.SendEmail(email_Dest, Nome_Dest, nome_aluno)
    
    #proximo
