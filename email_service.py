@@ -36,7 +36,7 @@ Anexo = DataFile()
 MeuLocal = os.path.dirname(os.path.realpath(__file__))
 
 #Get e-mail access information (após escopo do 'with' a arquivo será fechado)
-with open(MeuLocal + "//bkp_DoNOT_UploadToGitHubb//access.json", 'r', encoding='utf8') as read_file:
+with open(MeuLocal + "//Configuration//access.json", 'r', encoding='utf8') as read_file:
    DadosDeAcesso = json.load(read_file)
    SENDER = DadosDeAcesso["SENDER"]
    PASSWORD = DadosDeAcesso["PSWRD"]

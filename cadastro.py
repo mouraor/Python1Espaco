@@ -1,18 +1,20 @@
 
 import pandas as pd
-import email_service, os      
+import os
+import email_service
 
-#Configura local de execução do script
-MeuLocal = os.path.dirname(os.path.realpath(__file__))
-local = MeuLocal + 'bkp_DoNOT_UploadToGitHubb/Controle.xlsx'
+# #Configura local de execução do script
+# MeuLocal = os.path.dirname(os.path.realpath(__file__))
+# local = MeuLocal + 'bkp_DoNOT_UploadToGitHubb/Controle.xlsx'
 
 #Abre aquivo excel
-arq = pd.ExcelFile(r'bkp_DoNOT_UploadToGitHubb/Controle.xlsx')
+arq = pd.ExcelFile(r'Controle.xlsx')
 
-#Seleciona aba/planilha 1 (indice começa do 0)
-Sheet_cadastro = arq.parse(1)
+#Seleciona aba/planilha 2 (indice começa do 0)
+Sheet_cadastro = arq.parse(2)
 #armazena valores da coluna 'Responsável'
 lista_Responsaveis = Sheet_cadastro['Responsável']
+print('Carregou aba Responsáveis')
 
 #Para cada Responsável, pega nome e contato
 var = 0
